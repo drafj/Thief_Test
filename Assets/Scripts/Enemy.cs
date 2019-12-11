@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private GameObject warning = null;
     [SerializeField] private GameObject detect = null;
+    public bool canShowText;
 
     private Transform enemiTransform;
 
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
         enemiTransform = transform;
         warning = transform.GetChild(1).gameObject;
         detect = transform.GetChild(0).gameObject;
+        canShowText = false;
     }
 
     void Start()
@@ -39,7 +41,7 @@ public class Enemy : MonoBehaviour
         {
             warning.SetActive(true);
             detect.SetActive(false);
-            GameManager.instance.advice.text = "te estan detectando";
+            canShowText = true;
             if (timeOnSight <= 3)
             {
                 timeOnSight += Time.deltaTime;
@@ -58,7 +60,7 @@ public class Enemy : MonoBehaviour
             if (!(timeOnSight <= 0)) return;
             warning.SetActive(false);
             detect.SetActive(false);
-            GameManager.instance.advice.text = "";
+            canShowText = false;
         }
     }
 
