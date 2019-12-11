@@ -9,10 +9,12 @@ public class GameManager : MonoBehaviour
 
     public Text advice;
     public Transform playerTransform;
+    public GameObject winText;
 
     void Awake()
     {
         instance = this;
+        winText.SetActive(false);
     }
 
     void Update()

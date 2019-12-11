@@ -17,12 +17,18 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         enemiTransform = transform;
+        warning = transform.GetChild(1).gameObject;
+        detect = transform.GetChild(0).gameObject;
+    }
+
+    void Start()
+    {
+        playerTransform = GameManager.instance.playerTransform;
     }
 
     void Update()
     {
         DetectPlayer(IsLookinThePlayer(playerTransform.position));
-        playerTransform = GameManager.instance.playerTransform;
     }
 
     private float timeOnSight;
