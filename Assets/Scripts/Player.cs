@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float enemyDistance = 10;
+    public float catchRange = 4;
 
     void Start()
     {
@@ -12,6 +13,12 @@ public class Player : MonoBehaviour
     }
 
     void Update()
+    {
+        TakeThings();
+        ShowText();
+    }
+
+    public void ShowText()
     {
         GameObject enemyCloser = null;
         enemyDistance = 10;
@@ -34,5 +41,17 @@ public class Player : MonoBehaviour
         }
         else
             GameManager.instance.advice.text = "";
+    }
+
+    public void TakeThings()
+    {
+        int layerMask = 1 << 9;
+
+        if (Input.GetMouseButtonDown(0) && Physics.Raycast(transform.position, Camera.main.transform.forward, out RaycastHit hit, catchRange, layerMask))
+        {
+            GameObject gameHitted = hit.collider.gameObject;
+            if (hit.collider.GetComponent<CatchableObject>() != null)
+                gameHitted.transform.parent = transform;
+        }
     }
 }

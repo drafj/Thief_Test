@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
 
             if (Physics.Raycast(enemiTransform.position, displacement.normalized, out var hit, sightRange, layerMask))
             {
-                Debug.DrawLine(enemiTransform.position, displacement.normalized * hit.distance, Color.red);
+                Debug.DrawRay(enemiTransform.position, displacement.normalized * hit.distance, Color.red);
                 if (!hit.collider.GetComponent<Player>()) return false;
                 Debug.DrawRay(enemiTransform.position, displacement.normalized * hit.distance, Color.green);
                 return true;
