@@ -32,6 +32,7 @@ public sealed class FPSMove : MonoBehaviour
     private void FixedUpdate()
     {
         transform.eulerAngles = new Vector3(0,mFPSAim.mouseX,0);//se rota el objeto en X junto con el X del mouse para que cuando rote la camara tambien rote el objeto
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         rgbd.velocity = moveDirection * velocity * Time.deltaTime;
     }
 }

@@ -6,16 +6,25 @@ public class Player : MonoBehaviour
 {
     public float enemyDistance = 10;
     public float catchRange = 4;
+    public bool objectTaked;
+    public GameObject objectHitted;
 
     void Start()
     {
-        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
         TakeThings();
         ShowText();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     public void ShowText()
@@ -49,9 +58,30 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && Physics.Raycast(transform.position, Camera.main.transform.forward, out RaycastHit hit, catchRange, layerMask))
         {
-            GameObject gameHitted = hit.collider.gameObject;
-            if (hit.collider.GetComponent<CatchableObject>() != null)
-                gameHitted.transform.parent = transform;
+            switch (objectTaked)
+            {
+                case false:
+                    objectHitted = hit.collider.gameObject;
+                    if (objectHitted.GetComponent<CatchableObject>() != null)
+                    {
+                        objectTaked = true;
+                        objectHitted.transform.parent = Camera.main.transform;
+                        objectHitted.GetComponent<CatchableObject>().Take(true);
+                        Cursor.visible = false;
+                        Cursor.lockState = CursorLockMode.Locked;
+                    }
+                    break;
+                case true:
+                    objectTaked = false;
+                    objectHitted.transform.parent = null;
+                    objectHitted.GetComponent<CatchableObject>().Take(false);
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }
